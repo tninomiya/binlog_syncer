@@ -1,0 +1,22 @@
+#[derive(Queryable, Debug)]
+pub struct ReplicationConnectionConfiguration {
+    pub channel_name: String,
+    pub host: String,
+    pub port: i32,
+    pub user: String,
+    pub network_interface: String,
+    pub auto_position: String,
+    pub ssl_allowed: String,
+    pub ssl_ca_file: String,
+    pub ssl_ca_path: String,
+    pub ssl_certificate: String,
+    pub ssl_cipher: String,
+    pub ssl_key: String,
+    pub ssl_verify_server_certificate: String,
+    pub ssl_crl_file: String,
+    pub ssl_crl_path: String,
+    pub connection_retry_interval: i32,
+    pub connection_retry_count: i32,
+    pub heartbeat_interval: f32,
+    pub tls_version: String,
+}
