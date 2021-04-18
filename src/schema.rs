@@ -21,3 +21,19 @@ table! {
         tls_version -> Varchar,
     }
 }
+
+table! {
+    replication_connection_status (channel_name) {
+        channel_name -> Varchar,
+        group_name -> Varchar,
+        source_uuid -> Varchar,
+        thread_id -> Integer,
+        service_state -> Varchar,
+        count_received_heartbeats -> Integer,
+        last_heartbeat_timestamp -> Timestamp,
+        received_transaction_set -> Varchar,
+        last_error_number -> Integer,
+        last_error_message -> Varchar,
+        last_error_timestamp -> Timestamp,
+    }
+}

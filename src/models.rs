@@ -20,3 +20,18 @@ pub struct ReplicationConnectionConfiguration {
     pub heartbeat_interval: f32,
     pub tls_version: String,
 }
+
+#[derive(Queryable, Debug)]
+pub struct ReplicationConnectionStatus {
+    pub channel_name: String,
+    pub group_name: String,
+    pub source_uuid: String,
+    pub thread_id: Option<u32>,
+    pub service_state: String,
+    pub count_reveived_heartbeats: u32,
+    pub last_heartbeat_timestamp: String,
+    pub received_transaction_set: String,
+    pub last_error_number: i32,
+    pub last_errer_message: String,
+    pub last_error_timestamp: String,
+}
