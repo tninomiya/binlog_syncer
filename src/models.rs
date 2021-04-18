@@ -16,7 +16,7 @@ pub struct ReplicationConnectionConfiguration {
     pub ssl_crl_file: String,
     pub ssl_crl_path: String,
     pub connection_retry_interval: i32,
-    pub connection_retry_count: i32,
+    pub connection_retry_count: u32,
     pub heartbeat_interval: f32,
     pub tls_version: String,
 }
