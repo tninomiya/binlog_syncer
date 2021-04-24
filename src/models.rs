@@ -34,8 +34,32 @@ pub struct ReplicationConnectionStatus {
     pub thread_id: Option<u32>,
     pub service_state: String,
     pub count_received_heartbeats: u32,
-    pub last_heartbeat_timestamp: DateTime<Utc>,
+    // set as Option to handle default value '0000-00-00 00:00:00'
+    pub last_heartbeat_timestamp: Option<DateTime<Utc>>,
     pub received_transaction_set: String,
+    pub last_error_number: i32,
+    pub last_error_message: String,
+    // set as Option to handle default value '0000-00-00 00:00:00'
+    pub last_error_timestamp: Option<DateTime<Utc>>,
+}
+
+#[derive(FromRow, Debug)]
+#[sqlx(rename_all = "SCREAMING_SNAKE_CASE")]
+pub struct ReplicationApplierStatus {
+    pub channel_name: String,
+    pub service_state: String,
+    pub remaining_delay: Option<u32>,
+    pub count_transactions_retries: u32,
+}
+
+#[derive(FromRow, Debug)]
+#[sqlx(rename_all = "SCREAMING_SNAKE_CASE")]
+pub struct ReplicationApplierStatusByWorker {
+    pub channel_name: String,
+    pub worker_id: u32,
+    pub thread_id: Option<u32>,
+    pub service_state: String,
+    pub last_seen_transaction: String,
     pub last_error_number: i32,
     pub last_error_message: String,
     // set as Option to handle default value '0000-00-00 00:00:00'

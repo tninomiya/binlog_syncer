@@ -22,5 +22,21 @@ pub async fn main() -> Result<()> {
     .await?;
     println!("ReplicationConnectionStatus: {:?}", repl_conn_status);
 
+    let repl_appl_status =
+        sqlx::query_as::<_, ReplicationApplierStatus>("SELECT * FROM replication_applier_status")
+            .fetch_one(&conn)
+            .await?;
+    println!("ReplicationApplierStatus: {:?}", repl_appl_status);
+
+    let repl_appl_status_by_worker = sqlx::query_as::<_, ReplicationApplierStatusByWorker>(
+        "SELECT * FROM replication_applier_status_by_worker",
+    )
+    .fetch_one(&conn)
+    .await?;
+    println!(
+        "ReplicationApplierStatusByWorker: {:?}",
+        repl_appl_status_by_worker
+    );
+
     Ok(())
 }
