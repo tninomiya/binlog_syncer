@@ -1,20 +1,26 @@
 extern crate binlog_syncer;
-extern crate diesel;
 
 use self::binlog_syncer::*;
-use self::diesel::prelude::*;
 use self::models::*;
+use sqlx;
+use sqlx::Result;
 
-fn main() {
-    use binlog_syncer::schema::replication_connection_configuration::dsl::*;
+#[tokio::main]
+pub async fn main() -> Result<()> {
+    let conn = establish_connection().await?;
+    let repl_conn_config = sqlx::query_as::<_, ReplicationConnectionConfiguration>(
+        "SELECT * FROM replication_connection_configuration",
+    )
+    .fetch_one(&conn)
+    .await?;
+    println!("ReplicationConnectionConfiguration: {:?}", repl_conn_config);
 
-    let connection = establish_connection();
-    let results = replication_connection_configuration
-        .load::<ReplicationConnectionConfiguration>(&connection)
-        .expect("Error loading posts");
+    let repl_conn_status = sqlx::query_as::<_, ReplicationConnectionStatus>(
+        "SELECT * FROM replication_connection_status",
+    )
+    .fetch_one(&conn)
+    .await?;
+    println!("ReplicationConnectionStatus: {:?}", repl_conn_status);
 
-    println!("Displaying {} cfg", results.len());
-    for cfg in results {
-        println!("{:?}", cfg);
-    }
+    Ok(())
 }
